@@ -25,7 +25,7 @@ public class CompraService {
         repository.deleteById(id);
     }
 
-    public List<Compra> listar(Compra produto){
+    public List<Compra> listar(){
         return repository.findAll();
     }
 
