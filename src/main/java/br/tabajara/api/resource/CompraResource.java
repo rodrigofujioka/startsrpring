@@ -6,9 +6,7 @@ import br.tabajara.api.service.CompraService;
 import br.tabajara.api.service.ProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,9 +22,14 @@ public class CompraResource {
         return ResponseEntity.ok(service.incluir(compra));
     }
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<List<Compra>> listar(){
         return ResponseEntity.ok(service.listar());
+    }
+
+    @PutMapping
+    public ResponseEntity<Compra> atualizar(Compra compra){
+        return ResponseEntity.ok(service.atualizar(compra));
     }
 
 }
