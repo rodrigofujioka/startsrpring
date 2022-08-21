@@ -1,4 +1,4 @@
-package br.tabajara.api;
+package br.tabajara.api.resource;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
