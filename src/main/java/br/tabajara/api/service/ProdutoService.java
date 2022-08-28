@@ -3,6 +3,7 @@ package br.tabajara.api.service;
 import br.tabajara.api.domain.entity.Produto;
 import br.tabajara.api.domain.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,8 @@ import java.util.List;
 public class ProdutoService {
 
 
-   private ProdutoRepository repository;
+    @Autowired
+    private ProdutoRepository repository;
 
     public Produto incluir(Produto produto){
         return repository.save(produto);

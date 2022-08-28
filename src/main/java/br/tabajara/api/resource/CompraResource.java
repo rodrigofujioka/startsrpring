@@ -1,9 +1,9 @@
 package br.tabajara.api.resource;
 
+import br.tabajara.api.domain.entity.Compra;
 import br.tabajara.api.domain.entity.Produto;
+import br.tabajara.api.service.CompraService;
 import br.tabajara.api.service.ProdutoService;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produto")
-public class ProdutoResource {
+@RequestMapping("/compra")
+public class CompraResource {
 
     @Autowired
-    private ProdutoService service;
+    private CompraService service;
 
     @PostMapping
-    public ResponseEntity<Produto> incluir(@RequestBody Produto produto){
-        return ResponseEntity.ok(service.incluir(produto));
+    public ResponseEntity<Compra> incluir(@RequestBody Compra compra){
+        return ResponseEntity.ok(service.incluir(compra));
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listar(){
+    public ResponseEntity<List<Compra>> listar(){
         return ResponseEntity.ok(service.listar());
     }
 

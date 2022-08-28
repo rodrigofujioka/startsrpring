@@ -13,10 +13,10 @@ import java.util.Objects;
 
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/pessoa")
 public class PessoaResource {
 
+    @Autowired
     private PessoaService service;
 
     @PostMapping

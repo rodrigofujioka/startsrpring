@@ -1,12 +1,17 @@
 package br.tabajara.api.domain.entity;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Entity
+@Getter
+@Setter
 public class Produto {
 
     @Id
