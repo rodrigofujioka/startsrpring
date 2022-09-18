@@ -1,18 +1,23 @@
 package br.tabajara.api.resource;
 
 import br.tabajara.api.domain.entity.Pessoa;
+import br.tabajara.api.domain.entity.dto.Errors;
 import br.tabajara.api.domain.repository.PessoaRepository;
+import br.tabajara.api.exceptions.GenericExceptionStart;
 import br.tabajara.api.service.PessoaService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Objects;
+import javax.validation.*;
+import java.util.*;
 
 
 @RestController
+@Slf4j
 @RequestMapping("/pessoa")
 public class PessoaResource {
 
@@ -20,9 +25,36 @@ public class PessoaResource {
     private PessoaService service;
 
     @PostMapping
-    public ResponseEntity<Pessoa> incluir(@RequestBody Pessoa pessoa){
-        Pessoa p = service.incluir(pessoa);
-        return ResponseEntity.ok(p);
+    public ResponseEntity incluir(@RequestBody  Pessoa pessoa){
+
+        log.info("Incluir inicio" );
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
+        try{
+            Set<ConstraintViolation<Pessoa>> violations = validator.validate(pessoa);
+            if(violations.isEmpty()) {
+                pessoa = service.incluir(pessoa);
+            }else {
+                List<String> listaViolations = new ArrayList<>();
+                for(ConstraintViolation violation : violations){
+                    String erro = violation.getPropertyPath()+ " : " + violation.getMessage();
+                        listaViolations.add(erro);
+                }
+                log.error("Error Validation: Pessoa {}  error {}", pessoa, listaViolations);
+                return ResponseEntity.badRequest().body(
+                        Errors.builder()
+                        .entity("Pessoa")
+                        .error(listaViolations).build());
+            }
+
+
+        }catch (Exception e){
+            log.error("Error: Pessoa {}  error {}", pessoa, e.getCause());
+            throw new GenericExceptionStart(e.getMessage(), 400);
+        }
+        log.info("Incluir fim");
+        return ResponseEntity.ok(pessoa);
     }
 
     @GetMapping

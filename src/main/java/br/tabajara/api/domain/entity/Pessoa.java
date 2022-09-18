@@ -4,14 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CPF;
-import org.hibernate.validator.constraints.br.TituloEleitoral;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +24,9 @@ public class Pessoa {
     private int idade;
     private String sexo;
     private String cidade;
-    @Email
+    @Email(message = "E-mail não é válido, preencha com informações corretas")
     private String email;
+
+    @Transient
+    private List<String> violations;
 }

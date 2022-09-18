@@ -20,8 +20,15 @@ public class PessoaService {
     private PessoaRepository repository;
 
     public Pessoa incluir(Pessoa pessoa){
-
-        return repository.save(pessoa);
+        log.info("Incluir start" );
+        try{
+            pessoa = repository.save(pessoa);
+        }catch (Exception e){
+            log.error("Error: Pessoa {}  error {}", pessoa, e);
+            throw e;
+        }
+        log.info("Incluir end");
+        return pessoa;
     }
     public Pessoa consultar(Integer id){
         return repository.findById(id).orElseThrow();
