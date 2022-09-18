@@ -4,12 +4,14 @@ import br.tabajara.api.domain.entity.Pessoa;
 import br.tabajara.api.domain.repository.PessoaRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class PessoaService {
@@ -18,6 +20,7 @@ public class PessoaService {
     private PessoaRepository repository;
 
     public Pessoa incluir(Pessoa pessoa){
+
         return repository.save(pessoa);
     }
     public Pessoa consultar(Integer id){
